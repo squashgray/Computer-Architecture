@@ -8,13 +8,17 @@ class CPU:
     def __init__(self):
         self.ram = [0] * 256
         self.register = [0] * 8
-        self.PC = 0
-    
-    def ram_read(self):
-        return self.ram[self.PC]
+        self.pc = 0
+        self.hlt = False
+      
+        
 
-    def ram_write(self, value):
-        self.ram[self.PC] = value
+    
+    def ram_read(self, address):
+        return self.ram[address]
+
+    def ram_write(self, address, value):
+        self.ram[address] = value
 
     
     def load(self):
@@ -70,4 +74,24 @@ class CPU:
 
     def run(self):
         
-        pass
+        while not self.hlt:
+            ir = self.ram[self.pc]
+
+        
+            if ir == 130:
+                operand_a = self.ram_read(self.pc +1)
+                operand_b = self.ram_read(self.pc +2)
+                self.register[operand_a] = operand_b
+                self.pc += 3
+            elif ir == 71:
+                operand_a = self.ram_read(self.pc +1)
+                print(self.register[operand_a])
+                self.pc += 2
+            elif ir == 1:
+                self.hlt = True
+           
+           
+                
+           
+           
+            
